@@ -1,0 +1,36 @@
+version: "3.1"
+
+services:
+
+        web:
+                image: nginx:latest
+                ports:
+                        - 80:80
+                volumes:
+                        - ./code:/code
+                        - ./milohetz.conf:/etc/nginx/conf.d/milohetz.conf
+
+        php:
+                #image: php:7-fpm
+                build: "./docker/php"
+                volumes:
+                        - ./code:/code
+                        - ./log.conf:/usr/local/etc/php-fpm.d/zz-log.conf
+        
+        db:
+                image: mysql
+                command: --default-authentication-plugin=mysql_native_password
+                restart: always
+                volumes:
+                        - ./init:/docker-entrypoint-initdb.d
+                environment:
+                        MYSQL_ROOT_PASSWORD: SuperSecure
+                        MYSQL_DATABASE: craft
+                        MYSQL_USER: craftuser
+                        MYSQL_PASSWORD: craft
+
+        adminer:
+                image: adminer
+                restart: always
+                ports:
+                        - 8080:8080                
