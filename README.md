@@ -49,3 +49,20 @@ fastcgi_param HTTP_HOST YourSiteHere.com; # Change this
 3. 
    Inside the ```docker-compose.yml``` change parameters to fit your needs 
  
+
+4. Open up ```code/.env``` and apply the database settings from the ```docker-compose.yml``` to match. :warning: Make sure that CRAFT_DB_SERVER is set to ```db```
+```
+CRAFT_DB_DRIVER=mysql
+CRAFT_DB_SERVER=db
+CRAFT_DB_PORT=3306
+CRAFT_DB_DATABASE=craft
+CRAFT_DB_USER=craftuser
+CRAFT_DB_PASSWORD=craft
+```
+
+
+5. You also have to make a Security Key for the craft instance. You can do this in tons of ways, but one of them is by running the command: ```openssl rand -hex 16``` and take the output and put it in ```CRAFT_SECURITY_KEY=```
+
+
+## Start the container
+```docker compose up -d```
