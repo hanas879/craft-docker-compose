@@ -8,7 +8,9 @@ services:
                         - 80:80
                 volumes:
                         - ./code:/code
-                        - ./milohetz.conf:/etc/nginx/conf.d/milohetz.conf
+
+                          # Change both site.conf to the site you are trying to get up running(also matching the file site.conf in the root directory)
+                        - ./site.conf:/etc/nginx/conf.d/site.conf
 
         php:
                 #image: php:7-fpm
@@ -24,11 +26,15 @@ services:
                 volumes:
                         - ./init:/docker-entrypoint-initdb.d
                 environment:
+                        
+                        # Change to whathever your need is:
                         MYSQL_ROOT_PASSWORD: SuperSecure
                         MYSQL_DATABASE: craft
                         MYSQL_USER: craftuser
                         MYSQL_PASSWORD: craft
 
+
+                        # Uncomment to enable a web-based database manager
         adminer:
                 image: adminer
                 restart: always
